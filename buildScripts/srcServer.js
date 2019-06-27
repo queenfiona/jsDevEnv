@@ -1,9 +1,9 @@
-let express = require("express");
-let path = require('path');
-let open = require('open');
+import express from 'express';
+import path from 'path';
+import open from 'open';
 
-let port = 3000;
-let app = express();
+const port = 3000;
+const app = express();
 
 // Declare routing, funcs params(request,response)
 app.get('/',function(req,res){
