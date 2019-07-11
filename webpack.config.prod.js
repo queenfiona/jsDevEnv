@@ -3,6 +3,7 @@ import path from 'path';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default{
   mode: 'development',
@@ -32,12 +33,15 @@ export default{
       }
     },
     minimizer: [
-      new UglifyJsPlugin()  //Minify JS
+      new UglifyJsPlugin(), //Minify JS
     ],
 
   },
   plugins:[
     //Eliminate duplicate packages when generating bundle
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     // Hash the files using MD5 so that their names change when the content changes.
     new WebpackMd5Hash(),
 
@@ -71,7 +75,7 @@ export default{
       },
       {
           test:/\.css$/,
-          use:['style-loader','css-loader']
+          use:[MiniCssExtractPlugin.loader,'css-loader']
       },
     ]
   }
