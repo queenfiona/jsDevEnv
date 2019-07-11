@@ -1,5 +1,6 @@
 import path from 'path';
-import webpack from 'webpack';
+// import webpack from 'webpack';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 
 export default{
   mode: 'development',
@@ -17,12 +18,14 @@ export default{
     publicPath: '/',
     filename: 'bundle.js'
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin()  //Minify JS
+    ],
+
+  },
   plugins:[
     //Eliminate duplicate packages when generating bundle
-    new webpack.optimize.DedupePlugin(),
-
-    //Minify JS
-    new webpack.optimize.UglifyJsPlugin()
 
   ],
   module:{
