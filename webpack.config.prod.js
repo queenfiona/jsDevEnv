@@ -2,6 +2,7 @@ import path from 'path';
 // import webpack from 'webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
+import WebpackMd5Hash from 'webpack-md5-hash';
 
 export default{
   mode: 'development',
@@ -18,7 +19,7 @@ export default{
   output: {
     path: path.resolve(__dirname,'dist'),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].[chunkhash].js'
   },
   optimization: {
     splitChunks: {
@@ -37,6 +38,9 @@ export default{
   },
   plugins:[
     //Eliminate duplicate packages when generating bundle
+    // Hash the files using MD5 so that their names change when the content changes.
+    new WebpackMd5Hash(),
+
     // Create HTML file that includes reference to bundled JS
     new HTMLWebpackPlugin({
       template: 'src/index.html',
