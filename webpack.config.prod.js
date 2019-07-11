@@ -39,10 +39,7 @@ export default{
   },
   plugins:[
     //Eliminate duplicate packages when generating bundle
-<<<<<<< HEAD
     // Generate an external css file with a hash in the filename
-=======
->>>>>>> 917125ec86cdb626a0176b6b7f68e4ad9bd9fa5c
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
     }),
