@@ -1,6 +1,7 @@
 import path from 'path';
 // import webpack from 'webpack';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import HTMLWebpackPlugin from 'html-webpack-plugin';
 
 export default{
   mode: 'development',
@@ -26,6 +27,11 @@ export default{
   },
   plugins:[
     //Eliminate duplicate packages when generating bundle
+    // Create HTML file that includes reference to bundled JS
+    new HTMLWebpackPlugin({
+      template: 'src/index.html',
+      inject: true  //inject any necessary script tags
+    }),
 
   ],
   module:{
