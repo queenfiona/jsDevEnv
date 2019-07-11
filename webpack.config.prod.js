@@ -6,9 +6,10 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 export default{
   mode: 'development',
   devtool: 'source-map', //ensures we see original code
-  entry: [
-    path.resolve(__dirname,'src/index'),
-  ],
+  entry: {
+    vendor: path.resolve(__dirname,'src/vendor'),
+    main: path.resolve(__dirname,'src/index'),
+  },
   devServer:{
     noInfo: false,
     debug: true
@@ -17,9 +18,18 @@ export default{
   output: {
     path: path.resolve(__dirname,'dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: true, // represents entry point name
+      cacheGroups: {
+        vendors: {
+          reuseExistingChunk: true
+        }
+      }
+    },
     minimizer: [
       new UglifyJsPlugin()  //Minify JS
     ],
@@ -30,6 +40,18 @@ export default{
     // Create HTML file that includes reference to bundled JS
     new HTMLWebpackPlugin({
       template: 'src/index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      },
       inject: true  //inject any necessary script tags
     }),
 
